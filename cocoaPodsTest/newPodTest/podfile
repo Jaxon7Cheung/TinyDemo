@@ -1,0 +1,8 @@
+platform:ios, '11.0'
+
+inhibit_all_warnings!
+install!'cocoapods',:deterministic_uuids=>false
+target 'newPodTest' do
+  use_frameworks!
+  pod 'Masonry'
+end
