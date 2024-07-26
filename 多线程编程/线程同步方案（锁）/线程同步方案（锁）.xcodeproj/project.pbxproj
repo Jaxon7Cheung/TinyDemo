@@ -14,6 +14,11 @@
 		A2F2F9362C5248CB00BCFF9E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A2F2F9352C5248CB00BCFF9E /* Assets.xcassets */; };
 		A2F2F9392C5248CB00BCFF9E /* Base in Resources */ = {isa = PBXBuildFile; fileRef = A2F2F9382C5248CB00BCFF9E /* Base */; };
 		A2F2F93C2C5248CB00BCFF9E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A2F2F93B2C5248CB00BCFF9E /* main.m */; };
+		A2F2F9692C5355C300BCFF9E /* Lock.m in Sources */ = {isa = PBXBuildFile; fileRef = A2F2F9682C5355C200BCFF9E /* Lock.m */; };
+		A2F2F96C2C537B6900BCFF9E /* OSSpinLockClass.m in Sources */ = {isa = PBXBuildFile; fileRef = A2F2F96B2C537B6900BCFF9E /* OSSpinLockClass.m */; };
+		A2F2F96F2C538B3D00BCFF9E /* OSUnfairLockClass.m in Sources */ = {isa = PBXBuildFile; fileRef = A2F2F96E2C538B3C00BCFF9E /* OSUnfairLockClass.m */; };
+		A2F2F9722C53901700BCFF9E /* PthreadMutexClass.m in Sources */ = {isa = PBXBuildFile; fileRef = A2F2F9712C53901700BCFF9E /* PthreadMutexClass.m */; };
+		A2F2F9752C53D05B00BCFF9E /* PthreadMutexClass1.m in Sources */ = {isa = PBXBuildFile; fileRef = A2F2F9742C53D05B00BCFF9E /* PthreadMutexClass1.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -29,6 +34,16 @@
 		A2F2F9382C5248CB00BCFF9E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		A2F2F93A2C5248CB00BCFF9E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A2F2F93B2C5248CB00BCFF9E /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		A2F2F9672C5355C200BCFF9E /* Lock.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Lock.h; sourceTree = "<group>"; };
+		A2F2F9682C5355C200BCFF9E /* Lock.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Lock.m; sourceTree = "<group>"; };
+		A2F2F96A2C537B6900BCFF9E /* OSSpinLockClass.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OSSpinLockClass.h; sourceTree = "<group>"; };
+		A2F2F96B2C537B6900BCFF9E /* OSSpinLockClass.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OSSpinLockClass.m; sourceTree = "<group>"; };
+		A2F2F96D2C538B3C00BCFF9E /* OSUnfairLockClass.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OSUnfairLockClass.h; sourceTree = "<group>"; };
+		A2F2F96E2C538B3C00BCFF9E /* OSUnfairLockClass.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OSUnfairLockClass.m; sourceTree = "<group>"; };
+		A2F2F9702C53901700BCFF9E /* PthreadMutexClass.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PthreadMutexClass.h; sourceTree = "<group>"; };
+		A2F2F9712C53901700BCFF9E /* PthreadMutexClass.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PthreadMutexClass.m; sourceTree = "<group>"; };
+		A2F2F9732C53D05B00BCFF9E /* PthreadMutexClass1.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PthreadMutexClass1.h; sourceTree = "<group>"; };
+		A2F2F9742C53D05B00BCFF9E /* PthreadMutexClass1.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PthreadMutexClass1.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -67,6 +82,16 @@
 				A2F2F92D2C5248C800BCFF9E /* SceneDelegate.m */,
 				A2F2F92F2C5248C800BCFF9E /* ViewController.h */,
 				A2F2F9302C5248C800BCFF9E /* ViewController.m */,
+				A2F2F9672C5355C200BCFF9E /* Lock.h */,
+				A2F2F9682C5355C200BCFF9E /* Lock.m */,
+				A2F2F96A2C537B6900BCFF9E /* OSSpinLockClass.h */,
+				A2F2F96B2C537B6900BCFF9E /* OSSpinLockClass.m */,
+				A2F2F96D2C538B3C00BCFF9E /* OSUnfairLockClass.h */,
+				A2F2F96E2C538B3C00BCFF9E /* OSUnfairLockClass.m */,
+				A2F2F9702C53901700BCFF9E /* PthreadMutexClass.h */,
+				A2F2F9712C53901700BCFF9E /* PthreadMutexClass.m */,
+				A2F2F9732C53D05B00BCFF9E /* PthreadMutexClass1.h */,
+				A2F2F9742C53D05B00BCFF9E /* PthreadMutexClass1.m */,
 				A2F2F9322C5248C800BCFF9E /* Main.storyboard */,
 				A2F2F9352C5248CB00BCFF9E /* Assets.xcassets */,
 				A2F2F9372C5248CB00BCFF9E /* LaunchScreen.storyboard */,
@@ -146,10 +171,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A2F2F9692C5355C300BCFF9E /* Lock.m in Sources */,
 				A2F2F9312C5248C800BCFF9E /* ViewController.m in Sources */,
 				A2F2F92B2C5248C800BCFF9E /* AppDelegate.m in Sources */,
 				A2F2F93C2C5248CB00BCFF9E /* main.m in Sources */,
+				A2F2F96F2C538B3D00BCFF9E /* OSUnfairLockClass.m in Sources */,
 				A2F2F92E2C5248C800BCFF9E /* SceneDelegate.m in Sources */,
+				A2F2F96C2C537B6900BCFF9E /* OSSpinLockClass.m in Sources */,
+				A2F2F9752C53D05B00BCFF9E /* PthreadMutexClass1.m in Sources */,
+				A2F2F9722C53901700BCFF9E /* PthreadMutexClass.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
