@@ -205,33 +205,57 @@ void onceExec(void) {
 void queueGroup(void) {
     // GCD的队列组
     dispatch_group_t group = dispatch_group_create();
+    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
     
-    dispatch_group_async(group, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+    // 添加异步任务到并发队列中
+    dispatch_group_async(group, queue, ^{
         // 执行1个耗时的异步操作
-        int i = 0;
-        while (i < 100) {
-            NSLog(@"1");
-            i++;
+        for (int i = 0; i < 5; ++i) {
+            NSLog(@"1 --- %@", [NSThread currentThread]);
         }
     });
     
-    dispatch_group_async(group, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+    dispatch_group_async(group, queue, ^{
         // 执行1个耗时的异步操作
-        int i = 0;
-        while (i < 100) {
-            NSLog(@"2");
-            i++;
+        for (int i = 0; i < 5; ++i) {
+            NSLog(@"2 --- %@", [NSThread currentThread]);
         }
     });
     
-    dispatch_group_notify(group, dispatch_get_main_queue(), ^{
-        // 等前面的异步操作都执行完毕后，回到主线程...
-        NSLog(@"3");
+    // 唤醒：等前面的任务执行完毕后，会自动执行这个任务
+//    dispatch_group_notify(group, queue, ^{
+//        // 等前面的异步操作都执行完毕后，回到主线程...
+//        dispatch_async(dispatch_get_main_queue(), ^{
+//            for (int i = 0; i < 5; ++i) {
+//                NSLog(@"3 --- %@", [NSThread currentThread]);
+//            }
+//        });
+//    });
+    
+    // 等效
+//    dispatch_group_notify(group, dispatch_get_main_queue(), ^{
+//        // 等前面的异步操作都执行完毕后，回到主线程...
+//        for (int i = 0; i < 5; ++i) {
+//            NSLog(@"3 --- %@", [NSThread currentThread]);
+//        }
+//    });
+    
+    // 等任务1、2完成，再并发执行3、4
+    dispatch_group_notify(group, queue, ^{
+        for (int i = 0; i < 5; ++i) {
+            NSLog(@"3 --- %@", [NSThread currentThread]);
+        }
     });
+    dispatch_group_notify(group, queue, ^{
+        for (int i = 0; i < 5; ++i) {
+            NSLog(@"4 --- %@", [NSThread currentThread]);
+        }
+    });
+    
 }
 
 void manageQueue(void) {
-    dispatch_queue_t serialQueue = dispatch_queue_create("bySelf", DISPATCH_QUEUE_SERIAL);
+//    dispatch_queue_t serialQueue = dispatch_queue_create("bySelf", DISPATCH_QUEUE_SERIAL);
     
 //    dispatch_retain(serialQueue);
 //    dispatch_release(serialQueue);
@@ -368,6 +392,96 @@ void lockSecurity(void) {
     });
 }
 
+// 死锁
+- (void)test1 {
+//    dispatch_queue_t serialQueue = dispatch_get_main_queue();
+    dispatch_queue_t serialQueue = dispatch_queue_create("bySelf", DISPATCH_QUEUE_CONCURRENT);
+    NSLog(@"1");
+    dispatch_async(serialQueue, ^{
+        NSLog(@"2");
+        dispatch_sync(serialQueue, ^{
+            NSLog(@"3");
+        });
+        NSLog(@"4");
+    });
+    NSLog(@"5");
+}
+
+// 顺序执行
+- (void)test2 {
+    dispatch_queue_t serialQueue = dispatch_queue_create("bySelf", DISPATCH_QUEUE_SERIAL_WITH_AUTORELEASE_POOL);
+    dispatch_sync(serialQueue, ^{
+        NSLog(@"Task 1 begin: %@", [NSThread currentThread]);
+        NSLog(@"Task 1 end");
+    });
+    NSLog(@"Task1 complete");
+}
+
+// 死锁，但并不会崩溃
+// 所以GCD死锁的根本是任务循环等待阻塞，而崩溃的根本是sync提交时的死锁检查，实际开发中应该避免这种不会被检测到的情况出现，因为不会崩溃但它确一直占着线程资源
+- (void)test3 {
+    dispatch_queue_t serialQueue = dispatch_queue_create("bySelf", DISPATCH_QUEUE_SERIAL_WITH_AUTORELEASE_POOL);
+    dispatch_async(serialQueue, ^{ // 0
+        NSLog(@"Task 1 begin: %@", [NSThread currentThread]);
+        
+        dispatch_sync(dispatch_get_main_queue(), ^{  // 1
+            dispatch_sync(serialQueue, ^{  // 2
+                NSLog(@"Task 2 begin");
+            });
+        });
+        
+        NSLog(@"Task 2 complete");
+    });
+    
+    NSLog(@"main queue task complete");
+}
+
+
+- (void)test44 {
+    NSLog(@"2");
+}
+- (void)test4 {
+    dispatch_queue_t globalQueue = dispatch_get_global_queue(0, 0);
+    
+    // - (void)performSelector:(SEL)aSelector withObject:(nullable id)anArgument afterDelay:(NSTimeInterval)delay;
+    // 此方法本质是在RunLoop中添加定时器
+    
+    //        [self performSelector: @selector(test44)];
+    dispatch_sync(globalQueue, ^{
+        NSLog(@"1");
+        [self performSelector: @selector(test44) withObject: nil afterDelay: .0];
+        NSLog(@"3");
+        
+        // 添加RunLoop
+//        [[NSRunLoop currentRunLoop] addPort: [[NSPort alloc] init] forMode: NSDefaultRunLoopMode];
+//        [[NSRunLoop currentRunLoop] runMode: NSDefaultRunLoopMode beforeDate: [NSDate distantFuture]];
+    });
+    
+    // 在主线程中test44会打印，但在子线程中不会打印
+//    NSLog(@"1");
+//    [self performSelector: @selector(test44) withObject: nil afterDelay: .0];
+//    NSLog(@"3");
+}
+
+- (void)test55 {
+    NSLog(@"2");
+}
+- (void)test5 {
+    NSThread* thread = [[NSThread alloc] initWithBlock:^{
+        NSLog(@"1");
+        
+//        [[NSRunLoop currentRunLoop] addPort: [[NSPort alloc] init] forMode: NSDefaultRunLoopMode];
+//        [[NSRunLoop currentRunLoop] runMode: NSDefaultRunLoopMode beforeDate: [NSDate distantFuture]];
+    }];
+    [thread start];
+    
+    // 1
+    // target thread exited while waiting for the perform
+    [self performSelector: @selector(test55) onThread: thread withObject: nil waitUntilDone: YES];
+}
+
+//dispatch_sync：立马在当前线程同步执行任务
+//dispatch_async：开启一个新线程
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
@@ -386,12 +500,20 @@ void lockSecurity(void) {
 //    barrierFunc();
 //    delayExec();
 //    onceExec();onceExec();
-//    queueGroup();
+    queueGroup();
 //    abandonSerialQueuesToConcurrent();
 //    suspendOrResumeQueue();
 //    [self synchronizedSecurity];
 //    semaphoreSecurity();
-    lockSecurity();
+//    lockSecurity();
+    
+    // 关键：往当前串行队列同步添加任务，就会导致死锁
+//    [self test1];
+//    [self test2];
+//    [self test3];
+//    [self test4];
+//    [self test5];
+    
     
 }
 
