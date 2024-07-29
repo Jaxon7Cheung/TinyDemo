@@ -23,6 +23,10 @@
 		A2F2F97E2C573B8A00BCFF9E /* NSLockClass.m in Sources */ = {isa = PBXBuildFile; fileRef = A2F2F97D2C573B8A00BCFF9E /* NSLockClass.m */; };
 		A2F2F9812C573EC900BCFF9E /* NSRecursiveLockClass.m in Sources */ = {isa = PBXBuildFile; fileRef = A2F2F9802C573EC900BCFF9E /* NSRecursiveLockClass.m */; };
 		A2F2F9842C5740BF00BCFF9E /* NSConditionClass.m in Sources */ = {isa = PBXBuildFile; fileRef = A2F2F9832C5740BF00BCFF9E /* NSConditionClass.m */; };
+		A2F2F9872C5777C700BCFF9E /* NSConditionLockClass.m in Sources */ = {isa = PBXBuildFile; fileRef = A2F2F9862C5777C700BCFF9E /* NSConditionLockClass.m */; };
+		A2F2F98A2C577F2E00BCFF9E /* SerialQueueClass.m in Sources */ = {isa = PBXBuildFile; fileRef = A2F2F9892C577F2E00BCFF9E /* SerialQueueClass.m */; };
+		A2F2F98D2C5784EA00BCFF9E /* SemaphoreClass.m in Sources */ = {isa = PBXBuildFile; fileRef = A2F2F98C2C5784EA00BCFF9E /* SemaphoreClass.m */; };
+		A2F2F9902C578B3700BCFF9E /* SynchronizedClass.m in Sources */ = {isa = PBXBuildFile; fileRef = A2F2F98F2C578B3600BCFF9E /* SynchronizedClass.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -56,6 +60,14 @@
 		A2F2F9802C573EC900BCFF9E /* NSRecursiveLockClass.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NSRecursiveLockClass.m; sourceTree = "<group>"; };
 		A2F2F9822C5740BF00BCFF9E /* NSConditionClass.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NSConditionClass.h; sourceTree = "<group>"; };
 		A2F2F9832C5740BF00BCFF9E /* NSConditionClass.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NSConditionClass.m; sourceTree = "<group>"; };
+		A2F2F9852C5777C700BCFF9E /* NSConditionLockClass.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NSConditionLockClass.h; sourceTree = "<group>"; };
+		A2F2F9862C5777C700BCFF9E /* NSConditionLockClass.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NSConditionLockClass.m; sourceTree = "<group>"; };
+		A2F2F9882C577F2E00BCFF9E /* SerialQueueClass.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SerialQueueClass.h; sourceTree = "<group>"; };
+		A2F2F9892C577F2E00BCFF9E /* SerialQueueClass.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SerialQueueClass.m; sourceTree = "<group>"; };
+		A2F2F98B2C5784EA00BCFF9E /* SemaphoreClass.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SemaphoreClass.h; sourceTree = "<group>"; };
+		A2F2F98C2C5784EA00BCFF9E /* SemaphoreClass.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SemaphoreClass.m; sourceTree = "<group>"; };
+		A2F2F98E2C578B3600BCFF9E /* SynchronizedClass.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SynchronizedClass.h; sourceTree = "<group>"; };
+		A2F2F98F2C578B3600BCFF9E /* SynchronizedClass.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SynchronizedClass.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -112,6 +124,14 @@
 				A2F2F9802C573EC900BCFF9E /* NSRecursiveLockClass.m */,
 				A2F2F9822C5740BF00BCFF9E /* NSConditionClass.h */,
 				A2F2F9832C5740BF00BCFF9E /* NSConditionClass.m */,
+				A2F2F9852C5777C700BCFF9E /* NSConditionLockClass.h */,
+				A2F2F9862C5777C700BCFF9E /* NSConditionLockClass.m */,
+				A2F2F9882C577F2E00BCFF9E /* SerialQueueClass.h */,
+				A2F2F9892C577F2E00BCFF9E /* SerialQueueClass.m */,
+				A2F2F98B2C5784EA00BCFF9E /* SemaphoreClass.h */,
+				A2F2F98C2C5784EA00BCFF9E /* SemaphoreClass.m */,
+				A2F2F98E2C578B3600BCFF9E /* SynchronizedClass.h */,
+				A2F2F98F2C578B3600BCFF9E /* SynchronizedClass.m */,
 				A2F2F9322C5248C800BCFF9E /* Main.storyboard */,
 				A2F2F9352C5248CB00BCFF9E /* Assets.xcassets */,
 				A2F2F9372C5248CB00BCFF9E /* LaunchScreen.storyboard */,
@@ -191,16 +211,20 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A2F2F9872C5777C700BCFF9E /* NSConditionLockClass.m in Sources */,
 				A2F2F9692C5355C300BCFF9E /* Lock.m in Sources */,
 				A2F2F9312C5248C800BCFF9E /* ViewController.m in Sources */,
 				A2F2F92B2C5248C800BCFF9E /* AppDelegate.m in Sources */,
 				A2F2F97E2C573B8A00BCFF9E /* NSLockClass.m in Sources */,
+				A2F2F98D2C5784EA00BCFF9E /* SemaphoreClass.m in Sources */,
 				A2F2F93C2C5248CB00BCFF9E /* main.m in Sources */,
 				A2F2F96F2C538B3D00BCFF9E /* OSUnfairLockClass.m in Sources */,
 				A2F2F92E2C5248C800BCFF9E /* SceneDelegate.m in Sources */,
 				A2F2F96C2C537B6900BCFF9E /* OSSpinLockClass.m in Sources */,
 				A2F2F9752C53D05B00BCFF9E /* PthreadMutexClass1.m in Sources */,
+				A2F2F98A2C577F2E00BCFF9E /* SerialQueueClass.m in Sources */,
 				A2F2F9842C5740BF00BCFF9E /* NSConditionClass.m in Sources */,
+				A2F2F9902C578B3700BCFF9E /* SynchronizedClass.m in Sources */,
 				A2F2F9812C573EC900BCFF9E /* NSRecursiveLockClass.m in Sources */,
 				A2F2F97B2C5727EE00BCFF9E /* PthreadMutexClass2.m in Sources */,
 				A2F2F9722C53901700BCFF9E /* PthreadMutexClass.m in Sources */,

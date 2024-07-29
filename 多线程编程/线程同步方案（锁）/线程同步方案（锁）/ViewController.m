@@ -15,6 +15,10 @@
 #import "NSLockClass.h"
 #import "NSRecursiveLockClass.h"
 #import "NSConditionClass.h"
+#import "NSConditionLockClass.h"
+#import "SerialQueueClass.h"
+#import "SemaphoreClass.h"
+#import "SynchronizedClass.h"
 
 @interface ViewController ()
 
@@ -45,9 +49,13 @@
 //    self.lock = [[NSLockClass alloc] init];
 //    self.lock = [[NSRecursiveLockClass alloc] init];
 //    self.lock = [[NSConditionClass alloc] init];
+//    self.lock = [[NSConditionLockClass alloc] init];
+//    self.lock = [[SerialQueueClass alloc] init];  // 先取先存不确定，但能保证不会同时进行
+//    self.lock = [[SemaphoreClass alloc] init];
+    self.lock = [[SynchronizedClass alloc] init];
     
-//    [self.lock saleTickets];
-//    [self.lock moneyTest];
+    [self.lock saleTickets];
+    [self.lock moneyTest];
 //    [self.lock otherTest];
     
     
