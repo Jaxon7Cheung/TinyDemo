@@ -20,6 +20,16 @@
 #import "SemaphoreClass.h"
 #import "SynchronizedClass.h"
 
+#define SEMAPHOREBEGIN \
+static dispatch_semaphore_t semaphore; \
+static dispatch_once_t onceToken; \
+dispatch_once(&onceToken, ^{ \
+    semaphore = dispatch_semaphore_create(1); \
+}); \
+dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER); \
+
+#define SEMAPHOREEND dispatch_semaphore_signal(semaphore);
+
 @interface ViewController ()
 
 @property (nonatomic, strong)Lock* lock;
@@ -94,5 +104,87 @@
 - (void)test {
     NSLog(@"%s", __func__);
 }
+
+// 保证每个方法的锁是不一样的
+// 要写到外面，还需多次声明
+- (void)test1 {
+    static dispatch_semaphore_t semaphore;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        semaphore = dispatch_semaphore_create(1);
+    });
+    
+    dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);
+    
+    // ...
+    
+    dispatch_semaphore_signal(semaphore);
+}
+- (void)test2 {
+    static dispatch_semaphore_t semaphore;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        semaphore = dispatch_semaphore_create(1);
+    });
+    
+    dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);
+    
+    // ...
+    
+    dispatch_semaphore_signal(semaphore);
+}
+- (void)test3 {
+    static dispatch_semaphore_t semaphore;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        semaphore = dispatch_semaphore_create(1);
+    });
+    
+    dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);
+    
+    // ...
+    
+    dispatch_semaphore_signal(semaphore);
+}
+// 重复代码太多，可写成宏
+- (void)test4 {
+    SEMAPHOREBEGIN
+    
+    // ...
+    
+    SEMAPHOREEND
+}
+
+/*
+ 线程同步方案性能排行：
+    1. os_unfair_lock
+    2. OSSpinLock
+    3. dispatch_semaphore
+    4. pthread_mutex
+    5. dispatch_queue(DISPATCH_QUEUE_SERIAL)
+    6. NSLock
+    7. NSCondition
+    8. pthread_mutex(recursive)
+    9. NSRecursiveLock
+    10. NSConditionLock
+    11. @synchronized
+ */
+
+// 什么情况使用自旋锁比较划算？
+/*
+ 预计线程等待锁的时间很短
+ 加锁的代码（临界区）经常被调用，但竞争情况很少发生
+ CPU资源不紧张
+ 多核处理器
+ */
+
+// 什么情况使用互斥锁比较划算？
+/*
+ 预计线程等待锁的时间比较长
+ 单核处理器
+ 临界区有I/O操作
+ 临界区代码复杂或者循环量大
+ 临界区竞争非常激烈
+ */
 
 @end
