@@ -20,6 +20,8 @@
 
 @property (nonatomic, strong)Lock* lock;
 
+@property (nonatomic, strong)NSThread* thread;
+
 @end
 
 @implementation ViewController
@@ -42,16 +44,34 @@
 //    self.lock = [[PthreadMutexClass2 alloc] init];
 //    self.lock = [[NSLockClass alloc] init];
 //    self.lock = [[NSRecursiveLockClass alloc] init];
-    self.lock = [[NSConditionClass alloc] init];
+//    self.lock = [[NSConditionClass alloc] init];
     
 //    [self.lock saleTickets];
 //    [self.lock moneyTest];
-    [self.lock otherTest];
+//    [self.lock otherTest];
     
     
+    self.thread = [[NSThread alloc] initWithBlock:^{
+        NSLog(@"thread test");
+        
+        // 启用RunLoop
+        [[NSRunLoop currentRunLoop] addPort: [[NSPort alloc] init] forMode: NSDefaultRunLoopMode];
+        [[NSRunLoop currentRunLoop] run];
+    }];
+    [self.thread start];
     
+    // 线程的任务一旦执行完毕，生命周期就结束，无法再使用
+    // 保持线程的生命为什么要用RunLoop？用强指针解可以吧？
+    // 答：准确来讲，使用RunLoop是为了让线程保持激活状态，用强指针只能说明thread的那块内存在那儿，但thread已然不能使用
     
 }
 
+- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+    [self performSelector: @selector(test) onThread: self.thread withObject: nil waitUntilDone: NO];
+}
+
+- (void)test {
+    NSLog(@"%s", __func__);
+}
 
 @end

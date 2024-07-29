@@ -47,6 +47,7 @@
     
     if (![self.data count]) {
         // 等待
+        // 回来之后等待add线程解锁再执行
         [self.condition wait];
     }
     [self.data removeLastObject];
@@ -71,6 +72,8 @@
     
     [self.condition unlock];
     
+    // 解锁后再唤醒线程就不会等待解锁了（如果解锁前很耗时，就会卡了）
+//    [self.condition signal];
 }
 
 //- (void)dealloc
