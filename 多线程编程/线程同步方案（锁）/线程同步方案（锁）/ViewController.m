@@ -11,6 +11,10 @@
 #import "OSUnfairLockClass.h"
 #import "PthreadMutexClass.h"
 #import "PthreadMutexClass1.h"
+#import "PthreadMutexClass2.h"
+#import "NSLockClass.h"
+#import "NSRecursiveLockClass.h"
+#import "NSConditionClass.h"
 
 @interface ViewController ()
 
@@ -34,7 +38,11 @@
 //    self.lock = [[OSSpinLockClass alloc] init];
 //    self.lock = [[OSUnfairLockClass alloc] init];
 //    self.lock = [[PthreadMutexClass alloc] init];
-    self.lock = [[PthreadMutexClass1 alloc] init];
+//    self.lock = [[PthreadMutexClass1 alloc] init];
+//    self.lock = [[PthreadMutexClass2 alloc] init];
+//    self.lock = [[NSLockClass alloc] init];
+//    self.lock = [[NSRecursiveLockClass alloc] init];
+    self.lock = [[NSConditionClass alloc] init];
     
 //    [self.lock saleTickets];
 //    [self.lock moneyTest];

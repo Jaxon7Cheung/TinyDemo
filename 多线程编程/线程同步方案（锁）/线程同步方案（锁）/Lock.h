@@ -15,12 +15,12 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)moneyTest;
 - (void)saleTickets;
-- (void)otherTest;
 
 // 供子类去使用
 - (void)saveMoney;
 - (void)drawMoney;
 - (void)saleTicket;
+- (void)otherTest;
 
 @end
 
