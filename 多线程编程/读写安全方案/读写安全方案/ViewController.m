@@ -68,26 +68,38 @@
     self.queue = dispatch_queue_create("rw_queue", DISPATCH_QUEUE_CONCURRENT);
     
     for (int i = 0; i < 10; ++i) {
-        [self read];
-        [self read];
-        [self write];
+        dispatch_async(self.queue, ^{
+            [self read];
+        });
+        
+        dispatch_async(self.queue, ^{
+            [self read];
+        });
+        
+        dispatch_async(self.queue, ^{
+            [self read];
+        });
+        
+        dispatch_barrier_async(self.queue, ^{
+            [self write];
+        });
     }
 }
 
 // 方案2：
 
 - (void)read {
-    dispatch_async(self.queue, ^{
+//    dispatch_async(self.queue, ^{
         sleep(0.57);
         NSLog(@"read");
-    });
+//    });
 }
 
 - (void)write {
-    dispatch_barrier_async(self.queue, ^{
+//    dispatch_barrier_async(self.queue, ^{
         sleep(0.57);
         NSLog(@"write");
-    });
+//    });
 }
 
 // 方案1：
