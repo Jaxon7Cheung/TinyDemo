@@ -36,14 +36,14 @@ int main(int argc, const char * argv[]) {
         [archiver encodeObject: person2 forKey: @"personTwo"];
         
         //将归档（序列化）后的数据写入指定文件中
-        [archiver.encodedData writeToFile: @"/Users/jakey/Desktop/CS/Xcode/NSKeyedArchiverTest/test.archiver" atomically: YES];
+        [archiver.encodedData writeToFile: @"/Users/jakey/Desktop/CS/Xcode/TinyDemo/OC数据持久化/NSKeyedArchiverTest/test.archiver" atomically: YES];
         
         //结束归档
         [archiver finishEncoding];
         
         
         //解档
-        NSData* data = [NSData dataWithContentsOfFile: @"/Users/jakey/Desktop/CS/Xcode/NSKeyedArchiverTest/test.archiver"];
+        NSData* data = [NSData dataWithContentsOfFile: @"/Users/jakey/Desktop/CS/Xcode/TinyDemo/OC数据持久化/NSKeyedArchiverTest/test.archiver"];
         NSKeyedUnarchiver* unarchiver = [[NSKeyedUnarchiver alloc] initForReadingFromData: data error: nil];
         unarchiver.requiresSecureCoding = NO;
         
