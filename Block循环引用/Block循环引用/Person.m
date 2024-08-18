@@ -11,7 +11,7 @@
 
 - (void)test {
 //    __unsafe_unretained typeof(self)weakSelf = self;
-//    __weak typeof(self)weakSelf = self;
+    __weak typeof(self)weakSelf = self;
     
     self.block = ^{
         // block引用（捕获）self
@@ -19,6 +19,11 @@
         NSLog(@"%d", self.age);
     };
     self.block();
+    
+//    self.block = ^(Person * _Nonnull person) {
+//        NSLog(@"%d", person.age);
+//    };
+//    self.block(self);
     
 }
 

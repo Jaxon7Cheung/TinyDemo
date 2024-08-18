@@ -11,7 +11,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 typedef void(^Block)(void);
 
+
 @interface Person : NSObject
+
+//typedef void(^Block)(Person* person);
 
 @property (nonatomic, copy)Block block;
 @property (nonatomic, assign)int age;
