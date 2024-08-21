@@ -185,9 +185,12 @@ void blockCallBack(void) {
     定时器------------
 */
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
-    [NSTimer scheduledTimerWithTimeInterval: 3.0 repeats: YES block:^(NSTimer * _Nonnull timer) {
-        NSLog(@"定时器------------");
-    }];
+//    [NSTimer scheduledTimerWithTimeInterval: 3.0 repeats: YES block:^(NSTimer * _Nonnull timer) {
+//        NSLog(@"定时器------------");
+//    }];
+    
+    // 函数调用栈
+    NSLog(@"111111111");
 }
 
 
