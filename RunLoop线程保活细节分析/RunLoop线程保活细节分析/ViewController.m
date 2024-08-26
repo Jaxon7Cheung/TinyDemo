@@ -54,6 +54,8 @@
         while (weakSelf && !weakSelf.isStopped) {
             [[NSRunLoop currentRunLoop] runMode: NSDefaultRunLoopMode beforeDate: [NSDate distantFuture] ];
         }
+        // 没有weakSelf判断条件，销毁Controller时RunLoop又会重新启动，线程并不会销毁
+        // dealloc方法会将弱指针weakSelf置nil
         
         NSLog(@"%@---end---", [NSThread currentThread]);
     }];
@@ -61,6 +63,8 @@
 }
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+    if (!self.thread) return;
+    
 //    dispatch_async(dispatch_get_global_queue(0, 0), ^{
 //        [self test];
 //    }); // 虽然也是在子线程里做事，但又开了个新线程
@@ -91,6 +95,13 @@
 
 // 用来停止子线程的RunLoop
 - (void)stop {
+    if (!self.thread) return;
+    
+    [self performSelector: @selector(stopThread) onThread: self.thread withObject: nil waitUntilDone: YES];
+    // waitUntilDone:表示是否执行完selector的函数调用再继续往下执行代码，如果为NO，那么执行完performSelector，控制器就真的销毁了，这时再去调用到self就会报野指针的错误；设置为YES，代码会等子线程的stopThread执行完毕才会去真正销毁控制器
+}
+
+- (void)stopThread {
     // 设置标记为YES
     self.stopped = YES;
     // 停掉当前RunLoop并退出循环
@@ -99,6 +110,8 @@
     CFRunLoopStop(CFRunLoopGetCurrent());
     NSLog(@"%s %@", __func__, [NSThread currentThread]);
     
+    // 清空线程
+    self.thread = nil;
 }
 
 // 看下Controller挂了没（Controller没有死，线程也没有死）
@@ -108,8 +121,9 @@
     NSLog(@"%s", __func__);
     
     // 清空强指针线程是不会销毁的
-    [self performSelector: @selector(stop) onThread: self.thread withObject: nil waitUntilDone: YES];
-    self.thread = nil;
+//    [self performSelector: @selector(stop) onThread: self.thread withObject: nil waitUntilDone: YES];
+    
+    [self stop];
 }
 
 /*
